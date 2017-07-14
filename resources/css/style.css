@@ -1,0 +1,28 @@
+html {
+  font-size: 14px;
+  font-family: "Work Sans", sans-serif;
+}
+
+body {
+  background-color: rgb(255, 242, 242);
+  padding-top: 5.25rem;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: rgb(32, 64, 86);
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  color: rgb(32, 64, 86);
+  font-weight: bold;
+  line-height: 1.4;
+  margin-top: 2rem;
+}
+
+p {
+  color: rgb(74, 74, 74);
+  line-height: 1.4;
+}
