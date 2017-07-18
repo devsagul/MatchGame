@@ -35,6 +35,7 @@ MatchGame.generateCardValues = function () {
 MatchGame.renderCards = function(cardValues, $game) {
   $game.empty();
   $game.data("flipped", []);
+  $game.data("flippedNum", 0);
   var colors = ["hsl(25, 85%, 65%)", "hsl(55, 85%, 65%)", "hsl(90, 85%, 65%)", "hsl(160, 85%, 65%)", "hsl(220, 85%, 65%)", "hsl(265, 85%, 65%)", "hsl(310, 85%, 65%)", "hsl(360, 85%, 65%)"];
   for (var i = 0; i < cardValues.length; i++) {
     var $card = $('<div class="col-xs-3 card"></div>');
@@ -43,6 +44,7 @@ MatchGame.renderCards = function(cardValues, $game) {
     $card.data("value", cardValues[i]);
     $game.append($card);
   };
+  $game.data("lock-flag", false);
   $(".card").click(function() {
     MatchGame.flipCard($(this), $("#game"))
   });
@@ -54,7 +56,7 @@ MatchGame.renderCards = function(cardValues, $game) {
  */
 
 MatchGame.flipCard = function($card, $game) {
-  if (!($card.data("flipped"))) {
+  if (!($card.data("flipped")) && !($game.data("lock-flag"))) {
     $card.css("background-color", $card.data("color"));
     $card.text($card.data("value"));
     $card.data("flipped", true);
@@ -65,7 +67,12 @@ MatchGame.flipCard = function($card, $game) {
         $game.data("flipped")[0].css("background-color", "rgb(153, 153, 153)");
         $game.data("flipped")[1].css("color", "rgb(204, 204, 204)");
         $game.data("flipped")[1].css("background-color", "rgb(153, 153, 153)");
+        $game.data("flippedNum", $game.data("flippedNum") + 2);
+        if ($game.data("flippedNum") === 16) {
+          alert("You have won!");
+        }
       } else {
+        $game.data("lock-flag", true);
         var card1 = $game.data("flipped")[0];
         var card2 = $game.data("flipped")[1];
         window.setTimeout(function() {
@@ -75,6 +82,7 @@ MatchGame.flipCard = function($card, $game) {
           card2.data("flipped", false);
           card2.css("background-color", "rgb(32, 64, 86)");
           card2.text('');
+          $game.data("lock-flag", false);
         }, 350);
       }
       $game.data("flipped", []);
